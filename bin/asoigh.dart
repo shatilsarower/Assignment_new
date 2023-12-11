@@ -47,7 +47,7 @@ class Student extends Person {
   }
 }
 
-/// Create another class Teacher that extends Person
+
 
 class Teacher extends Person {
   int teacherID;
@@ -72,10 +72,10 @@ class Teacher extends Person {
   }
 }
 
-///  Create a class StudentManagementSystem
+
 
 void main() {
-  // Create instances of Student and Teacher classes
+
   var student = Student("John Doe", 20, "123 Main St", 1234);
   student.addCourseScore(90);
   student.addCourseScore(85);
