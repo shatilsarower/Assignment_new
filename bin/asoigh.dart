@@ -1,96 +1,117 @@
+/// Define an interface named Role
 
-// A. Define an interface named Role:
 abstract class Role {
   void displayRole();
 }
 
-// B. Create a class Person:
+/// Create a class Person
+
 class Person implements Role {
   String name;
   int age;
   String address;
+  Role role;
 
-  Person(this.name, this.age, this.address);
+  Person(this.name, this.age, this.address, this.role);
 
-  // Getter methods for attributes
+  @override
+  void displayRole() {
+    print("Role: ${role.runtimeType}");
+  }
+
   String getName() => name;
   int getAge() => age;
   String getAddress() => address;
-
-  // Implement the Role interface methods
-  @override
-  void displayRole() {
-    print('Role: Unknown');
-  }
 }
 
-// C. Create a class Student that extends Person:
+/// Create a class Student that extends Person
+
 class Student extends Person {
-  String studentID;
-  double grade;
-  List<double> courseScores;
+  int studentID;
+  double? averageScore;
+  late final List<double> courseScores;
 
-  Student(String name, int age, String address, this.studentID, this.grade, this.courseScores)
-      : super(name, age, address);
-
-  // Override the displayRole() method
-  @override
-  void displayRole() {
-    print('Role: Student');
+  Student(String name, int age, String address, this.studentID)
+      : super(name, age, address, StudentRole()) {
+    courseScores = [];
   }
 
-  // Method to calculate the average score of courses
+
+  void addCourseScore(double score) {
+    courseScores.add(score);
+  }
+
   double calculateAverageScore() {
     if (courseScores.isEmpty) return 0.0;
     return courseScores.reduce((a, b) => a + b) / courseScores.length;
   }
 }
 
-// D. Create another class Teacher that extends Person:
+/// Create another class Teacher that extends Person
+
 class Teacher extends Person {
-  String teacherID;
-  List<String> coursesTaught;
+  int teacherID;
+  List<String> coursesTaught = [];
 
-  Teacher(String name, int age, String address, this.teacherID, this.coursesTaught)
-      : super(name, age, address);
 
-  // Override the displayRole() method
-  @override
-  void displayRole() {
-    print('Role: Teacher');
+  Teacher(String name, int age, String address, this.teacherID)
+      : super(name, age, address, TeacherRole()) {
+    coursesTaught = [];
   }
 
-  // Method to display the courses taught by the teacher
+
+  void addCourseTaught(String course) {
+    coursesTaught.add(course);
+  }
+
   void displayCoursesTaught() {
-    print('Courses Taught:');
+    print("Courses Taught:");
     for (var course in coursesTaught) {
-      print('- $course');
+      print("- $course");
     }
   }
 }
 
-// E. Create a class StudentManagementSystem:
+///  Create a class StudentManagementSystem
+
 void main() {
   // Create instances of Student and Teacher classes
-  var student = Student('John Doe', 20, '123 Main St', 'S123', 89.0, [90, 85, 82]);
-  var teacher = Teacher('Mrs. Smith', 35, '456 Oak St', 'T456', ['Math', 'English', 'Bangla']);
+  var student = Student("John Doe", 20, "123 Main St", 1234);
+  student.addCourseScore(90);
+  student.addCourseScore(85);
+  student.addCourseScore(82);
 
-  // Display student information
-  print('Student Information:');
+  var teacher = Teacher("Mrs. Smith", 35, "456 Oak St", 5678);
+  teacher.addCourseTaught("Math");
+  teacher.addCourseTaught("English");
+  teacher.addCourseTaught("Bangla");
+
+  print("Student Information:");
   student.displayRole();
-  print('Name: ${student.getName()}');
-  print('Age: ${student.getAge()}');
-  print('Address: ${student.getAddress()}');
-  print('Average Score: ${student.calculateAverageScore()}');
+  print("Name: ${student.getName()}");
+  print("Age: ${student.getAge()}");
+  print("Address: ${student.getAddress()}");
+  print("Average Score: ${student.calculateAverageScore().toStringAsFixed(1)}");
 
-  print('\n');
-
-  // Display teacher information
-  print('Teacher Information:');
+  print("\nTeacher Information:");
   teacher.displayRole();
-  print('Name: ${teacher.getName()}');
-  print('Age: ${teacher.getAge()}');
-  print('Address: ${teacher.getAddress()}');
+  print("Name: ${teacher.getName()}");
+  print("Age: ${teacher.getAge()}");
+  print("Address: ${teacher.getAddress()}");
   teacher.displayCoursesTaught();
 }
 
+
+class StudentRole implements Role {
+  @override
+  void displayRole() {
+    // TODO: implement displayRole
+  }
+}
+
+class TeacherRole implements Role {
+  @override
+  void displayRole() {
+    // TODO: implement displayRole
+  }
+}
