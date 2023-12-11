@@ -36,7 +36,7 @@ void main() {
   print("Original Fruit Details before Discount:");
   displayFruitDetails(fruits);
 
-  // Apply 10% discount
+
   final discount = 0.1;
   applyPriceDiscount(fruits, discount);
 
